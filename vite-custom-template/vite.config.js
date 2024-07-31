@@ -1,7 +1,23 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from "vite";
+import { fileURLToPath, URL } from "node:url";
+import pluginReact from "@vitejs/plugin-react-swc";
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-})
+const viteConfig = defineConfig({
+  base: "/",
+  server: {
+    host: "localhost",
+    port: 3000,
+  },
+  plugins: [
+    pluginReact({
+      jsxRunntime: "automatic",
+    }),
+  ],
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+});
+
+export default viteConfig;
